@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+
+  <div id="wrapper">
+    <% include ../../partials/admin/leftmenu %>
+
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Quản lý câu hỏi</h4>
+          </div>
+          <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+              <li><a href="/admin">Trang chủ</a></li>
+              <li class="active">Quản lý khóa học</li>
+            </ol>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="white-box">
+              <form class="form-horizontal form-material" action="/admin/question/edit" method="post">
+
+                <input type="hidden" name="ID" value="" />
+                <input type="hidden" name="ID_EXERCISE" value="<%= exerciseId %>" />
+                <input type="hidden" name="ID_COURSE" value="<%= courseId %>" />
+
+                <div class="form-group">
+                  <label class="col-md-12">Thứ tự câu hỏi</label>
+                  <div class="col-md-12">
+                    <input type="number" placeholder="Nhập thứ tự câu hỏi.."
+                      class="form-control form-control-line" name="INDEX_QUESTION"
+                      value="" id="INDEX_QUESTION">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Nội dung câu hỏi</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập nội dung câu hỏi.."
+                      class="form-control form-control-line" name="CONTENT"
+                      value="" id="CONTENT">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-12">
+                    Câu A
+                    <input type="radio" name="CAUDUNG" id="CAUA" value="0" /> Câu đúng
+                  </label>
+                  <div class="col-sm-12">
+                    <input type="text" placeholder="Nhập câu A.."
+                      class="form-control form-control-line" name="ANSWER"
+                      value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">
+                    Câu B
+                    <input type="radio" name="CAUDUNG" id="CAUB" value="1" /> Câu đúng
+                  </label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập câu B.."
+                      class="form-control form-control-line" name="ANSWER"
+                      value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">
+                    Câu C
+                    <input type="radio" name="CAUDUNG" id="CAUC" value="2" /> Câu đúng
+                  </label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập câu C.."
+                      class="form-control form-control-line" name="ANSWER"
+                      value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">
+                    Câu D
+                    <input type="radio" name="CAUDUNG" id="CAUD" value="3" /> Câu đúng
+                  </label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập câu D.."
+                      class="form-control form-control-line" name="ANSWER"
+                      value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="btn btn-success" onclick="submitform()" type="button">
+                      Lưu
+                    </button>
+                    <button class="btn btn-light" type="button"
+                      onclick="window.location.href='/admin/exercise/<%= courseId %>/edit/<%= exerciseId %>'">
+                      Quay lại
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <% include ../../partials/admin/footer %>
+
+  <script>
+    function submitform() {
+      if($('#INDEX_QUESTION').val().trim().length == 0 ||
+        $('#CONTENT').val().trim().length == 0) {
+
+          alert('Vui lòng điền đầy đủ thông tin!');
+          return false;
+
+        } else {
+
+          for(var index = 0; index < $('input[name="ANSWER"]').length; index++) {
+            if($('input[name="ANSWER"]').eq(index).val().length == 0) {
+              alert('Vui lòng điền đầy đủ câ trả lời thông tin!');
+              return false;
+            }
+          }
+
+          var radios = document.getElementsByName('CAUDUNG');
+          var ischeck = false;
+
+          for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+              ischeck = true;
+              break;
+            }
+          }
+
+          if(ischeck == false) {
+            alert('Vui lòng điền đầy đủ câ trả lời thông tin!');
+            return false;
+          }
+
+          $('form').submit();
+        }
+    }
+  </script>
+
+</body>
+
+</html>

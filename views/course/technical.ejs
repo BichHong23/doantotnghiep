@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <% include ../../partials/head %>
+
+    <!-- COUSTOM CSS link  -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/technical.css" />
+    <style>
+      .iframe {
+        widows: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+
+  <body class="subpage">
+    <% include ../../partials/header %>
+    <section class="uv-course-archive">
+      <div class="container">
+        <br />
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <div class="image-header">
+              <img
+                class="img-head"
+                src="/images/technical-support-2533526_960_720.png"
+              />
+              <p class="title-kiem-tra-ki-thuat">Kiểm tra kĩ thuật</p>
+            </div>
+            <br />
+            <div class="kiem-tra-micro">
+              <p>Nói vào micro của anh/chị</p>
+              <audio id="audiosource" controls></audio>
+              <div class="progress" style="height: 4px;">
+                <div
+                  id="microphone"
+                  class="progress-bar progress-bar-success"
+                  style="background-color: gray;"
+                  role="progressbar"
+                  aria-valuenow="0"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style="width:0%"
+                ></div>
+              </div>
+              <p>Anh, chị có nghe thấy tiếng của mình không ?</p>
+            </div>
+            <br />
+            <div class="button-microphone">
+              <button
+                style="
+              background: transparent;
+              border: 0;
+          "
+                id="btnRecord"
+              >
+                Microphone <i class="fa fa-microphone"></i>
+              </button>
+            </div>
+            <br />
+            <div class="button-phat-lai-am-thanh">
+              <button
+                id="btnPlayRecord"
+                style="
+              background: transparent;
+              border: 0;
+          "
+              >
+                Phát lại âm thanh <i class="fa fa-volume-up"></i>
+              </button>
+            </div>
+            <br />
+            <div class="kiem-tra text-center">
+              <button class="btn btn-default" onclick="window.location.href='/class'">Xác nhận</button>
+            </div>
+            <br />
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <% include ../../partials/footerInfo %> <% include ../../partials/footer %>
+
+    <script src="/study/javascript/microphone.js"></script>
+  </body>
+</html>

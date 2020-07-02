@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%- title %></title>
+  <% include ../../partials/head %>
+
+  <link rel="stylesheet" href="/study/css/time.css" />
+  <link rel="stylesheet" href="/study/css/chat.css" />
+
+  <style>
+    .iframe {
+      widows: 200px;
+      height: 200px;
+    }
+  </style>
+  <script>
+    function showClassTime(id) {
+      $('#classTime').html('Đang tải ...');
+      $.post("/ajaxclassTime", {
+          classId: id
+        })
+        .done(function(data) {
+          let html = ` <div class="time-remaining">
+              <p class="title-time-remain">Danh sách ca</p>
+            </div>
+            `;
+
+          const left = [];
+          const right = [];
+          data.forEach((e, _) => {
+
+            if (e.ID % 2 == 0) left.push(e);
+            else right.push(e);
+          })
+
+          if (left.length > right.length) {
+
+            for (i = 0; i < left.length; i++) {
+
+              html += ` <div>
+              <a href="/lession?classTime=${left[i].ID}&classId=${id}" class="shift shift-left"><p>Ca ${left[i].TIME_START}</p></a>`;
+
+              if (right.length > i) {
+                html += `<a href="/lession?classTime=${right[i].ID}&classId=${id}" class="shift shift-right"><p>Ca ${right[i].TIME_START}</p></a>`;
+              }
+
+              html += `</div>`
+            }
+
+          } else {
+            for (i = 0; i < right.length; i++) {
+
+              html += ` <div>`;
+
+              if (left.length > i) {
+                html += `<a href="/lession?classTime=${left[i].ID}&classId=${id}" class="shift shift-left"><p>Ca ${left[i].TIME_START}</p></a>`;
+              }
+
+              if (right.length > i) {
+                html += `<a href="/lession?classTime=${right[i].ID}&classId=${id}" class="shift shift-right"><p>Ca ${right[i].TIME_START}</p></a>`;
+              }
+
+              html += `</div>`
+            }
+          }
+
+          $('#classTime').html(html);
+        });
+    }
+  </script>
+</head>
+
+<body class="subpage">
+  <% include ../../partials/header %>
+
+  <section class="uv-course-archive">
+    <div class="container">
+      <br />
+      <div class="row">
+        <div class="col-md-5">
+
+          <% data0.forEach((e,i) => { %>
+
+          <div class="lop-hoc-truc-tuyen row " style="height: unset;">
+            <div class="tieu-de-lop-hoc-truc-tuyen">
+              <h5>LỚP HỌC TRỰC TUYẾN</h5>
+            </div>
+            <div style="position: relative;">
+              <img src="<%=e.IMAGE_CLASS%>" />
+              <div class="lop-hoc-info" style=" position: absolute;
+                background-color: gray;
+                width: 100%;
+                top: unset;
+                opacity: 0.8;
+                /* top: 318px; */
+                bottom: 0;
+                z-index: 0;">
+                <div class="lop-hoc-info-content">
+                  <h5>Chủ đề: <%=e.TITLE_CLASS%></h5>
+                  <p><%=e.DESCRIPTION_CLASS%></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="button-lop-hoc-truc-tuyen">
+              <button onclick="showClassTime(<%=e.ID%>)" style="background-color: lightslategray" class="col-md-12 button-under-image button-under-image-middle">
+                <p>Chọn lớp</p>
+              </button>
+            </div>
+          </div>
+          <br />
+          <% }) %>
+        </div>
+
+        <div class="col-md-2" id="classTime">
+
+        </div>
+
+        <div class="col-md-5">
+
+          <% data1.forEach((e,i) => { %>
+
+          <div class="lop-hoc-truc-tuyen row " style="height: unset;">
+            <div class="tieu-de-lop-hoc-truc-tuyen">
+              <h5>LỚP HỌC THẢO LUẬN</h5>
+            </div>
+            <div style="position: relative;">
+              <img src="<%=e.IMAGE_CLASS%>" />
+              <div class="lop-hoc-info" style=" position: absolute;
+                        background-color: gray;
+                        width: 100%;
+                        top: unset;
+                        opacity: 0.8;
+                        /* top: 318px; */
+                        bottom: 0;
+                        z-index: 0;">
+                <div class="lop-hoc-info-content">
+                  <h5>Chủ đề: <%=e.TITLE_CLASS%></h5>
+                  <p><%=e.DESCRIPTION_CLASS%></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="button-lop-hoc-truc-tuyen">
+              <button onclick="showClassTime(<%=e.ID%>)" style="background-color: lightslategray" class="col-md-12 button-under-image button-under-image-middle">
+                <p>Chọn lớp</p>
+              </button>
+            </div>
+          </div>
+          <br />
+          <% }) %>
+
+        </div>
+
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3">
+              <hr class="space" />
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-3"></div>
+              <div class="col-md-6 button-under-image button-kiem-tra-ki-thuat">
+                <a href="./technical.html">
+                  <p>Kiểm tra kĩ thuật</p>
+                </a>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <div class="col-md-3">
+              <hr class="space" />
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+  </section>
+
+  <% include ../../partials/footerInfo %>
+  <% include ../../partials/footer %>
+
+</body>
+</html>

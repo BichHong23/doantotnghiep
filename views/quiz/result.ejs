@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <% include ../../partials/head %>
+    <style></style>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      const data = new Map();
+      let progress = 0;
+      let index = 0;
+
+      // function confirmQuestion(i) {
+      //   const radioValue = $(".optionsRadios" + i + ":checked").val();
+      //   $(".optionsRadios" + i + "").prop("disabled", "disabled");
+      //   data.set(i.toString(), radioValue);
+      //   updateProgress();
+      // }
+
+      function deleteQuestion(i) {
+        // $(".optionsRadios").prop("disabled", "");
+        $(".optionsRadios").prop("checked", false);
+        data.clear();
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const quizSize = $(".contenthide").length;
+        progress = Math.round((data.size / parseInt(quizSize)) * 100);
+        $("#lead").html("Đã hoàn thành " + progress + "%");
+        $("#progress-barid").css("width", progress + "%");
+        $("#sr-only").html("Đã hoàn thành " + progress + "%");
+      }
+
+      function choice(e, i) {
+        const radioValue = $(".optionsRadios" + i + ":checked").val();
+        // $(".optionsRadios" + i + "").prop("disabled", "disabled");
+        // $(e).prop("checked", "checked");
+        data.set(i.toString(), radioValue);
+        updateProgress();
+      }
+    </script>
+  </head>
+
+  <body>
+    <% include ../../partials/header %>
+
+    <section class="uv-course-archive">
+      <form action="/quiz/create" method="POST">
+        <div class="container">
+          <br />
+          <div class="row">
+            <div
+              id="primary"
+              class="content-area uv-course-listing-inner col-md-12 col-sm-12"
+            >
+              <div class="course-description">
+                <small
+                  >Kiểm tra chủ đề :
+                  <span
+                    ><a href="course-single.html"
+                      >Tiếng Anh</a
+                    ></span
+                  >
+                </small>
+                <small>Trạng thái: <span>Đã hoàn thành</span> </small>
+                <small>Số câu đúng: <span><%= numberRight %></span> </small>
+                <input type="hidden" name="size" value="<%=data.length%>" />
+                <input
+                  type="hidden"
+                  name="exerciseId"
+                  value="<%=exerciseId%>"
+                />
+                <% data.forEach((e,i) => { %>
+                <div class="contenthide" id="content<%=i%>">
+                  <h3 class="course-title">Câu hỏi <%=i+1%></h3>
+                  <div class="quiz-wrapper">
+                    <h4>
+                      <%=e.CONTENT%>
+                    </h4>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="panel panel-primary">
+                          <div class="panel-body">
+                            <% e.answers.forEach((e1,i1) => { %>
+                            <div class="radio">
+                              <label>
+                                <%if(e.choice==e1.INDEX_ANSWER) {%>
+                                <input
+                                  name="optionsradios<%=i%>"
+                                  class="optionsRadios optionsRadios<%=i%>"
+                                  id="optionsRadios<%=i%>_<%=i1%>"
+                                  value="<%=e.ID%>_<%=e1.INDEX_ANSWER%>"
+                                  type="radio"
+                                  checked
+                                  onclick="choice(this, '<%=i%>')"
+                                />
+                                <%} else {%>
+                                <input
+                                  name="optionsradios<%=i%>"
+                                  class="optionsRadios optionsRadios<%=i%>"
+                                  id="optionsRadios<%=i%>_<%=i1%>"
+                                  value="<%=e.ID%>_<%=e1.INDEX_ANSWER%>"
+                                  type="radio"
+                                  onclick="choice(this, '<%=i%>')"
+                                />
+                                <%}%> <%=e1.CONTENT%>
+                              </label>
+                            </div>
+                            <% }) %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+          <br />
+        </div>
+      </form>
+    </section>
+    <script>
+      // $(document).ready(function() {
+      //   // $(".contenthide").hide();
+      //   $("#content" + index).show();
+      // });
+
+      // $("#prevQuestion").click(function() {
+      //   if (index > 0) {
+      //     index--;
+      //     $(".contenthide").hide();
+      //     $("#content" + index).show();
+      //   }
+      // });
+      // $("#nextQuestion").click(function() {
+      //   const quizSize = $(".contenthide").length;
+      //   if (index < quizSize - 1) {
+      //     index++;
+      //     $(".contenthide").hide();
+      //     $("#content" + index).show();
+      //   }
+      // });
+    </script>
+    <% include ../../partials/footerInfo %> <% include ../../partials/footer %>
+  </body>
+</html>

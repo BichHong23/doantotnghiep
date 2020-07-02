@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <% include ../../partials/head %>
+  </head>
+
+  <body class="grey lighten-3">
+    <% include ../../partials/header %>
+    <main class="pt-5 mx-lg-5">
+      <div class="container-fluid mt-5">
+        <div class="card">
+          <div class="card-footer">
+            <a href="/question/create" class="btn btn-success btn-sm">
+              Tạo mới
+            </a>
+          </div>
+          <!--Card content-->
+          <div class="card-body">
+            <!-- Table  -->
+            <table class="table table-hover">
+              <!-- Table head -->
+              <thead class="blue-grey lighten-4">
+                <tr>
+                  <th>#</th>
+                  <th>Nội dung</th>
+                  <th>Ngày tạo</th>
+                  <th>Loại câu hỏi</th>
+                  <th>Trạng thái</th>
+                  <th>Tác vụ</th>
+                </tr>
+              </thead>
+              <!-- Table head -->
+
+              <!-- Table body -->
+              <tbody>
+              <form action="/question" method="POST">
+
+             
+                <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><select class="custom-select my-1 mr-sm-2" id="" name="category">
+                          <option value="0">-- Chọn --</option>
+                          <%category.forEach(e => {%>
+                            <option value="<%=e.content%>" <%=filter.category==e.content? "selected":""%> ><%=e.content%></option>
+                          <%})%>
+                          
+                      </select></th>
+                      <th></th>
+                      <th>
+
+                        <button type="submit" class="btn btn-sm btn-link"><i
+                          class="fa fa-search "
+                          style="color:#27ae60; font-size:20px"
+                        ></i></button>
+
+
+                      </th>
+                </tr>
+              </form>
+                <%data.forEach((e,i) => {%>
+                <tr>
+                  <th scope="row"><%-i+1%></th>
+                  <td width="50%"><%-e.content%></td>
+                  <td><%-e.createdAt.toJSON().slice(0,10)%></td>
+                  <td ><%-e.category%></td>
+                  <td><%-e.status == 1?"Hoạt động":"Ngưng hoạt động"%></td>
+                  <td>
+                    <a title="Hiện thị" href="/question/display?id=<%=e._id%>">
+                      <i
+                        class="fa fa-search "
+                        style="color:#27ae60; font-size:20px"
+                      ></i> </a
+                    >&nbsp <% if(e.status != 2) { %>
+                    <a title="Xóa" href="/question/delete?id=<%=e._id%>">
+                      <i
+                        class="fa fa-trash-alt"
+                        style="color:#e74c3c; font-size:20px"
+                      ></i> </a
+                    >&nbsp
+                    <a title="Chỉnh sửa" href="/question/edit?id=<%=e._id%>">
+                      <i
+                        class="fa fa-edit"
+                        style="color:#2980b9 ;font-size:20px"
+                      ></i>
+                    </a>
+
+                    <%}%>
+                  </td>
+                </tr>
+                <%})%>
+              </tbody>
+              <!-- Table body -->
+            </table>
+            <!-- Table  -->
+          </div>
+          <div class="card-footer text-center">
+            
+              <% if (paginate.hasPreviousPages || paginate.hasNextPages(pageCount) ) { %>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <% if (paginate.hasPreviousPages) { %>
+                      <li class="page-item">
+                        <a class="page-link" href="<%= paginate.href(true) %>">
+                          <i class="fa fa-arrow-circle-left"></i>
+                          
+                        </a>  
+                      </li>
+                    <% } %>  
+                    <% if (pages) { %>
+                      <% pages.forEach(function(page, i){ %>
+                        <a class="page-link" href="<%= page.url %>"><%= page.number %></a>
+                      <% }); %>
+                    <% } %>  
+                    <% if (paginate.hasNextPages(pageCount)) { %>
+                      <li class="page-item">
+                        <a  class="page-link" href="<%= paginate.href() %>">
+                          
+                          <i class="fa fa-arrow-circle-right"></i>
+                        </a>  
+                      </li>
+                    <% } %>  
+                    </ul>      
+                  </nav>
+                <% } %>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

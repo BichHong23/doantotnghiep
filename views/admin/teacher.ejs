@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+      <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
+  </div>
+
+  <div id="wrapper">
+      <% include ../../partials/admin/leftmenu %>
+
+      <!-- ============================================================== -->
+      <!-- Page Content -->
+      <!-- ============================================================== -->
+      <div id="page-wrapper">
+          <div class="container-fluid">
+              <div class="row bg-title">
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                      <h4 class="page-title">Quản lý giáo viên</h4>
+                  </div>
+                  <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                      <ol class="breadcrumb">
+                          <li><a href="/admin">Trang chủ</a></li>
+                          <li class="active">Quản lý giáo viên</li>
+                      </ol>
+                  </div>
+                  <!-- /.col-lg-12 -->
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="white-box">
+                        <h3 class="box-title">
+                          Quản lý giáo viên
+
+                          <a href="/admin/teacher/new"
+                            class="btn btn-primary">
+                            Tạo mới
+                          </a>
+
+                        </h3>
+
+                        <div class="table-responsive">
+                              <table class="table">
+                                  <thead>
+                                      <tr>
+                                          <th>Tên</th>
+                                          <th>Email</th>
+                                          <th>SĐT</th>
+                                          <th>Trạng thái</th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+
+                                      <% listTeacher.forEach(function(item){ %>
+
+                                        <%
+                                          if(item.STATUS == true) {
+                                            StrA = "Hoạt động";
+                                          } else {
+                                            StrA = "Ngưng hoạt động";
+                                          }
+                                        %>
+
+                                        <tr>
+                                            <td><%= item.NAME %></td>
+                                            <td><%= item.EMAIL %></td>
+                                            <td><%= item.PHONE %></td>
+                                            <td><%= StrA %></td>
+                                            <td>
+                                              <a href="/admin/teacher/edit/<%= item.ID %>"
+                                                class="btn btn-primary">
+                                                Sửa
+                                              </a>
+                                              <a href="/admin/teacher/delete/<%= item.ID %>" onclick="return confirmBox();"
+                                                class="btn btn-danger">
+                                                Xóa
+                                              </a>
+                                            </td>
+                                        </tr>
+                                      <% }); %>
+
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- /.container-fluid -->
+          <footer class="footer text-center"></footer>
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Page Content -->
+      <!-- ============================================================== -->
+  </div>
+
+    <% include ../../partials/admin/footer %>
+</body>
+
+</html>

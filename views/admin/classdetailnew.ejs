@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+
+  <script>
+    function KTtieudelh() {
+      if (document.getElementById('TITLE_CLASS').value != '') {
+
+        tieudelh.innerText = "";
+        return true;
+      }
+      else {
+        tieudelh.innerText = "* chưa nhập tiêu đề";
+        return false;
+      }
+    }
+
+
+    function KTmotalh() {
+      if (document.getElementById('DESCRIPTION_CLASS').value != '') {
+
+        motalh.innerText = "";
+        return true;
+      }
+      else {
+        motalh.innerText = "* chưa nhập mô tả";
+        return false;
+      }
+    }
+
+    function KTlinklh() {
+      if (document.getElementById('IMAGE_CLASS').value != '') {
+
+        hinhanhlh.innerText = "";
+        return true;
+      }
+      else {
+        hinhanhlh.innerText = "* chưa nhập mô tả";
+        return false;
+      }
+    }
+
+    function KTtuanlh() {
+     
+      if (document.getElementById('INDEX_WEEK').value != '') {
+
+       
+          tuanlh.innerText = "";
+          return true;
+
+      }
+      else {
+        tuanlh.innerText = "chưa nhập tuần";
+        return false;
+      }
+    }
+    function KTngaylh() {
+      if (document.getElementById('DATE_STUDY').value != '') {
+        var specific_date = new Date('DATE_STUDY');
+        var current_date = new Date();
+        if (current_date.getTime() > specific_date.getTime()) {
+          ngaylh.innerText = "* ngày học không hợp lệ";
+          return false;
+        }
+        else {
+          ngaylh.innerText = "";
+          return true;
+        }
+
+      }
+      else {
+        ngaylh.innerText = "chưa nhập ngày học";
+        return false;
+      }
+    }
+
+
+    function SubmitForm() {
+      if (KTtieudelh() == false || KTmotalh() == false || KTlink() == false || KTtuanlh() == false || KTngaylh() == false) {
+        alert("Bạn chưa nhập đầy đủ và đúng thông tin");
+        return false;
+      }
+      return true;
+    }
+
+
+  </script>
+
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+
+  <div id="wrapper">
+    <% include ../../partials/admin/leftmenu %>
+
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Quản lý lớp học</h4>
+          </div>
+          <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+              <li><a href="/admin">Trang chủ</a></li>
+              <li class="active">Quản lý khóa học</li>
+            </ol>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="white-box">
+              <form class="form-horizontal form-material" action="/admin/class/edit" method="post">
+
+                <input type="hidden" name="ID" value="" />
+                <input type="hidden" name="ID_COURSE" value="<%= courseId %>" />
+
+                <div class="form-group">
+                  <label class="col-md-12">Tiêu đề lớp học</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập tiêu đề lớp học.." id="TITLE_CLASS"
+                      class="form-control form-control-line" value="" name="TITLE_CLASS" onBlur="KTtieudelh()">
+                  </div>
+                  <span id="tieudelh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="example-email" class="col-md-12">Mô tả lớp học</label>
+                  <div class="col-md-12">
+                    <textarea placeholder="Nhập mô tả lớp học.." id="DESCRIPTION_CLASS"
+                      class="form-control form-control-line" name="DESCRIPTION_CLASS" onBlur="KTmotalh()"></textarea>
+                  </div>
+                  <span id="motalh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Link hình ảnh</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập link hình ảnh.." id="IMAGE_CLASS"
+                      class="form-control form-control-line" name="IMAGE_CLASS" onBlur="KTlinklh()"/>
+                  </div>
+                  <span id="hinhanhlh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Tuần học</label>
+                  <div class="col-md-12">
+                    <input type="number" placeholder="Nhập tuần học.." id="INDEX_WEEK"
+                      class="form-control form-control-line" value="" name="INDEX_WEEK" min="1" onBlur="KTtuanlh()"/>
+                  </div>
+                  <span id="tuanlh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Ngày học</label>
+                  <div class="col-md-12">
+                    <input type="date" placeholder="Nhập ngày học.." id="DATE_STUDY"
+                      class="form-control form-control-line" value="" name="DATE_STUDY" onBlur="KTngaylh()"/>
+                  </div>
+                  <span id="ngaylh" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-12">Loại lớp học</label>
+                  <div class="col-sm-12">
+                    <select class="form-control form-control-line" name="TYPE_CLASS">
+                      <option value="0" selected>Lớp trực tiếp</option>
+                      <option value="1">Lớp thảo luận</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="btn btn-success"  onclick="return SubmitForm();" type="submit">
+                      Lưu
+                    </button>
+                    <button class="btn btn-light" type="button"
+                      onclick="window.location.href='/admin/course/edit/<%= courseId %>'">
+                      Quay lại
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <!-- <script>
+    function submitform() {
+      if ($('#TITLE_CLASS').val().trim().length == 0 ||
+        $('#DESCRIPTION_CLASS').val().trim().length == 0 ||
+        $('#IMAGE_CLASS').val().trim().length == 0 ||
+        $('#INDEX_WEEK').val().trim().length == 0 ||
+        $('#DATE_STUDY').val().trim().length == 0) {
+
+        alert('Vui lòng điền đầy đủ thông tin!');
+        return false;
+
+      } else {
+        $('form').submit();
+      }
+    }
+  </script> -->
+
+  <% include ../../partials/admin/footer %>
+</body>
+
+</html>

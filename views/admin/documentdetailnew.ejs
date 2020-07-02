@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+
+  <div id="wrapper">
+    <% include ../../partials/admin/leftmenu %>
+
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Quản lý tài liệu học</h4>
+          </div>
+          <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+              <li><a href="/admin">Trang chủ</a></li>
+              <li class="active">Quản lý khóa học</li>
+            </ol>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="white-box">
+              <form class="form-horizontal form-material" action="/admin/document/edit" method="post"
+                enctype="multipart/form-data">
+
+                <input type="hidden" name="ID" value="" />
+                <input type="hidden" name="ID_CLASS" value="<%= classId %>" />
+                <input type="hidden" name="ID_COURSE" value="<%= courseId %>" />
+
+                <div class="form-group">
+                  <label class="col-md-12">Tiều đề tài liệu</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập tiều đề tài liệu.."
+                      class="form-control form-control-line" name="TITLE_DOCUMENT"
+                      value="" id="TITLE_DOCUMENT">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-12">Loại tài liệu</label>
+                  <div class="col-sm-12">
+                    <select class="form-control form-control-line" name="TYPE_DOCUMENT"
+                      id="TYPE_DOCUMENT" onchange="changeTypeDocument();">
+
+                      <option value="0" selected>Tài liệu word/pdf</option>
+                      <option value="1">Tài liệu video</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div id="linkyoutube" class="form-group" style="display: none;">
+                  <label class="col-md-12">Link video youtube</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập link video youtube.."
+                      class="form-control form-control-line" name="LINK_FILE"
+                      value="" id="LINK_FILE">
+                  </div>
+                </div>
+
+                <div id="uploadfile" class="form-group">
+                  <label class="col-md-12">Upload word/pdf</label>
+                  <div class="col-md-12">
+                    <input type="file" placeholder="Upload word/pdf.." id="filetoupload"
+                      class="form-control form-control-line" name="filetoupload"
+                      value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="btn btn-success" onclick=" return submitform();" type="submit">
+                      Lưu
+                    </button>
+                    <button class="btn btn-light" type="button"
+                      onclick="window.location.href='/admin/class/<%= courseId %>/edit/<%= classId %>'">
+                      Quay lại
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <% include ../../partials/admin/footer %>
+
+  <script>
+    function changeTypeDocument() {
+      if($('#TYPE_DOCUMENT').val() == 0) {
+        $('#linkyoutube').css('display', 'none');
+        $('#uploadfile').css('display', '');
+      } else {
+        $('#linkyoutube').css('display', '');
+        $('#uploadfile').css('display', 'none');
+      }
+    }
+
+    function submitform() {
+      if($('#TITLE_DOCUMENT').val().trim().length == 0) {
+
+        alert('Vui lòng điền đầy đủ thông tin!');
+        return false;
+
+      } else {
+
+        if($('#TYPE_DOCUMENT').val() == 1) {
+          if($('#LINK_FILE').val().trim().length == 0) {
+            alert('Vui lòng điền đầy đủ thông tin!');
+            return false;
+          }
+        } else {
+          if($('#filetoupload').val().trim().length == 0) {
+            alert('Vui lòng điền đầy đủ thông tin!');
+            return false;
+          }
+        }
+
+        $('form').submit();
+      }
+    }
+  </script>
+
+</body>
+
+</html>

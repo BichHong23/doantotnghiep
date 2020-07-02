@@ -1,0 +1,133 @@
+<header class="xt-header">
+  <div class="xt-header-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 uv-header-contact">
+          <a href=""> <i class="fa fa-phone"></i>(519) - 875 - 9822</a>
+          <a href=""> <i class="fa fa-envelope-o"></i>info@curricular.edu</a>
+        </div>
+        <div class="col-sm-6 uv-header-user">
+          <% if(userName) { %>
+          <label>Xin chào <%=userName%></label>
+          &nbsp;&nbsp;&nbsp; <%if( admin ) {%>
+          <a style="font-weight: bold; font-size: 16px;" href="/admin">Vào trang quản trị</a>
+          &nbsp;&nbsp;&nbsp; <%}%>
+
+          <a href="/user/logout"><i class="fa fa-lock"></i>Đăng xuất</a>
+          <% } else { %>
+          <a href="login-reg.html"
+            ><i class="fa fa-lock"></i>Đăng nhập/ Đăng ký</a
+          >
+          <% } %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="xt-main-nav">
+    <nav class="navbar nav-scroll home-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="uv-logo">
+              <a href="/">
+                <img
+                  src="/study/images/univ-logo.jpg"
+                  alt=""
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-8 pull-right">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-action="#js-navbar-menu"
+                aria-expanded="false"
+              >
+                <span aria-hidden="true" class="icon"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="js-navbar-menu">
+              <ul class="nav navbar-nav ep-mobile-menu" id="navbar-nav">
+                <li class="dropdown xt-drop-nav">
+                  <a
+                    href="/"
+                    class="dropdown-toggle"
+                    data-animations="fadeInDown fadeInDown fadeInDown"
+                  >
+                    Trang chủ
+                  </a>
+                </li>
+                <li class="dropdown xt-drop-nav">
+                  <a
+                    href="/quiz"
+                    data-animations="fadeInDown fadeInDown fadeInDown"
+                  >
+                    Bài tập
+                  </a>
+                </li>
+                <li class="dropdown xt-drop-nav">
+                  <a
+                    href="/class"
+                    data-animations="fadeInDown fadeInDown fadeInDown"
+                  >
+                    <%=gv == "gv" ? "Giảng dạy trực tuyến" : "Học trực tuyến"%>
+                  </a>
+                </li>
+                <li class="dropdown xt-drop-nav">
+                  <a
+                    href="/document"
+                    data-animations="fadeInDown fadeInDown fadeInDown"
+                  >
+                    Tài liệu
+                  </a>
+                </li>
+                <li class="dropdown xt-drop-nav">
+                  <a
+                    href="/technical"
+                    data-animations="fadeInDown fadeInDown fadeInDown"
+                  >
+                    Cổng hỗ trợ online
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- /.navbar -->
+  </div>
+  <!-- Mobile Menu-->
+  <div class="menu-spacing visible-xs nav-scroll">
+    <div class="mobile-menu-area visible-xs visible-sm">
+      <div class="mobile-menu">
+        <nav id="mobile-menu-active">
+          <ul class="main">
+            <li class="active">
+              <a class="main-a" href="./index.html">Trang chủ</a>
+            </li>
+            <li>
+              <a class="main-a" href="./quiz-list.html">Thi cử</a>
+            </li>
+            <li>
+              <a class="main-a" href="">Cổng hỗ trợ online</a>
+            </li>
+            <li>
+              <a class="main-a" href="/class">Học trực tuyến</a>
+            </li>
+            <li>
+              <a class="main-a" href="./document.html">Tài liệu</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

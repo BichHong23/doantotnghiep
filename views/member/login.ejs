@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <% include ../../partials/head %>
+
+    <style>
+      .text-danger{
+        color: red;
+        font-size: 14px;
+      }
+    </style>
+    
+
+    <script>
+
+      function KTemail(){
+                var re= /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                if (document.getElementById('reg-email').value !='')
+            {
+          
+                if(re.test(document.getElementById('reg-email').value.trim())==false)
+            
+              {
+                mail.innerText="* email sai định dạng";
+                return false;
+              }
+              else
+              {
+                mail.innerText="";
+                return true;
+              }
+        
+          }   
+        else
+          {
+              mail.innerText="* chưa nhập email";
+              return false;
+          }
+            }
+      
+            function KTten(){
+                var re=/^[A-Z]\w*/;
+                if (document.getElementById('reg-name').value !='')
+            {
+          
+                if(re.test(document.getElementById('reg-name').value.trim())==false)
+            
+              {
+                ten.innerText="* tên bắt đầu bằng chữ hoa";
+                return false;
+              }
+              else
+              {
+                ten.innerText="";
+                return true;
+              }
+        
+          }   
+        else
+          {
+              ten.innerText="* chưa nhập tên";
+              return false;
+          }
+            }
+      
+            function KTsdt(){
+                var re=/((09|03|07|08|05)+([0-9]{8})\b)/g;
+                
+            if (document.getElementById('reg-phone').value !='')
+            {
+          
+                if(re.test(document.getElementById('reg-phone').value.trim())==false)
+            
+              {
+                sdt.innerText="* số điện thoại sai định dạng";
+                return false;
+              }
+              else
+              {
+                sdt.innerText="";
+                return true;
+              }
+        
+          }   
+        else
+          {
+              sdt.innerText="chưa nhập số điện thoại";
+              return false;
+          }
+            }
+      
+            
+            function KTmatkhau(){
+                var re=/(?=.*\d).{6,}/;
+                if (document.getElementById('reg-password').value !='')
+            {
+          
+                if(re.test(document.getElementById('reg-password').value.trim())==false)
+            
+              {
+                mk.innerText="* phải có chữ, số và ít nhất 6 kí tự";
+                return false;
+              }
+              else
+              {
+                mk.innerText="";
+                return true;
+              }
+        
+          }   
+        else
+          {
+              mk.innerText="* chưa nhập mật khẩu";
+              return false;
+          }
+            }
+      
+            function KTxacnhanmatkhau(){         
+                if(document.getElementById('confirm-password').value != 
+                document.getElementById('reg-password'.value)) {
+                  xnmk.innerText=" * xác nhận mật khẩu không trùng khớp với mật khẩu đã nhập";
+                  return false;
+                } else {
+                  xnmk.innerText="";
+                  return true;
+      
+                }
+                
+            }
+      
+            function SubmitForm(){
+        if (KTxacnhanmatkhau()==false || KTmatkhau()==false || KTsdt()==false || KTten()==false || KTemail()==false)
+        {
+          alert("Bạn chưa nhập đầy đủ và đúng thông tin");
+          return false;
+        }
+        return true;
+       }
+       
+        </script>
+          
+  </head>
+
+  <body class="login-reg-page">
+    <div class="uv-login-reg-form">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 col-xs-12 uv-login-reg-from-inner">
+            <div class="login-logo">
+              <a href="index.html">
+                <img
+                  src="/study/images/univ-logo-lg.png"
+                  alt=""
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+            <div class="uv-login-reg shadow-1">
+              <!-- Nav tabs -->
+              <div class="login-reg-nav">
+                <ul class="nav nav-tabs" role="tablist" id="myTabs">
+                  <li role="presentation" class="<%=tab == 2? '' : 'active' %>">
+                    <a
+                      href="#home"
+                      aria-controls="home"
+                      role="tab"
+                      data-toggle="tab"
+                      >Đăng nhập</a
+                    >
+                  </li>
+                  <li role="presentation" class="<%=tab == 2? 'active' : '' %>">
+                    <a
+                      href="#profile"
+                      aria-controls="profile"
+                      role="tab"
+                      data-toggle="tab"
+                      >Đăng ký</a
+                    >
+                  </li>
+                </ul>
+                <hr />
+              </div>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div
+                  role="tabpanel"
+                  class="tab-pane <%=tab == 2? '' : 'active' %>"
+                  id="home"
+                >
+                  <form
+                    id="fromLogin"
+                    action="/user/login"
+                    method="post"
+                    class="uv-login-form"
+                    
+                  >
+                    <% if (message.length > 0) { %>
+                    <div class="alert alert-danger"><%= message %></div>
+                    <% } %>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        tabindex="1"
+                        class="form-control"
+                        placeholder="Email"
+                        value=""
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        tabindex="2"
+                        class="form-control"
+                        placeholder="Mật khẩu"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <button
+                            type="submit"
+                            class="form-control btn btn-fill"
+                          >
+                            Đăng nhập
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div
+                  role="tabpanel"
+                  class="tab-pane <%=tab == 2? 'active' : '' %>"
+                  id="profile"
+                >
+                  <form
+                    id="register-form"
+                    action="/user/login"
+                    method="post"
+                    class="uv-reg-form"
+                    onsubmit="SubmitForm()"
+                  >
+                  <!-- <% if (message.length > 0) { %>
+                    <div class="alert alert-danger"><%= message %></div>                  
+                  <% } %> -->
+                    <div class="form-group">
+                      <input
+                        type="email"
+                        name="regemail"
+                        id="reg-email"
+                        tabindex="1"
+                        class="form-control"
+                        placeholder="Email"
+                        onBlur="KTemail()"
+                        value="<%=data.regemail%>"
+                      />
+                      <span id="mail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="regname"
+                        id="reg-name"
+                        tabindex="1"
+                        class="form-control"
+                        placeholder="Họ tên"
+                        onBlur="KTten()"
+                        value="<%=data.regname%>"
+                      />
+                      <span id="ten" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        name="regphone"
+                        id="reg-phone"
+                        tabindex="1"
+                        class="form-control"
+                        placeholder="Điện thoại"
+                        onBlur="KTsdt()"
+                        value="<%=data.regphone%>"
+                      />
+                      <span id="sdt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="password"
+                        name="regpassword"
+                        id="reg-password"
+                        tabindex="2"
+                        class="form-control"
+                        onBlur="KTmatkhau()"
+                        placeholder="Mật khẩu"
+                      />
+                      <span id="mk" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="password"
+                        name="confirmpassword"
+                        id="confirm-password"
+                        tabindex="2"
+                        class="form-control"
+                        onBlur="KTxacnhanmatkhau()"
+                        placeholder="Nhập lại mật khẩu"
+                      />
+                      <span id="xnmk" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <button
+                            type="submit"
+                            class="form-control btn btn-fill "
+                          >
+                            Đăng ký tài khoản
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% include ../../partials/footer %>
+  </body>
+</html>

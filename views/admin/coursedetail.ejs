@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+
+  <div id="wrapper">
+    <% include ../../partials/admin/leftmenu %>
+
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Quản lý khóa học</h4>
+          </div>
+          <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+              <li><a href="/admin">Trang chủ</a></li>
+              <li class="active">Quản lý khóa học</li>
+            </ol>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="white-box">
+
+              <form class="form-horizontal form-material" action="/admin/course/edit" method="post">
+
+                <input type="hidden" name="ID" value="<%= courseOne.ID %>" />
+
+                <div class="form-group">
+                  <label class="col-md-12">Tiêu đề khóa học</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập tiêu đề khóa học.."
+                      class="form-control form-control-line" value="<%= courseOne.TITLE_COURSE %>"
+                      name="TITLE_COURSE" id="TITLE_COURSE">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="example-email" class="col-md-12">Mô tả khóa học</label>
+                  <div class="col-md-12">
+                    <textarea placeholder="Nhập mô tả khóa học.."
+                      class="form-control form-control-line" id="DESCRIPTION_COURSE"
+                      name="DESCRIPTION_COURSE"><%= courseOne.DESCRIPTION_COURSE %></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Link hình ảnh</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập link hình ảnh.."
+                      class="form-control form-control-line"
+                      value="<%= courseOne.IMAGE_COURSE %>"
+                      name="IMAGE_COURSE" id="IMAGE_COURSE">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Số tuần</label>
+                  <div class="col-md-12">
+                    <input type="number" placeholder="Nhập số tuần.."
+                      class="form-control form-control-line" value="<%= courseOne.TOTAL_WEEK %>"
+                      name="TOTAL_WEEK" id="TOTAL_WEEK">
+                  </div>
+                </div>
+
+                <%
+                  var dateTemp = new Date(courseOne.START_DAY);
+
+                  var date = dateTemp.getDate();
+                  var month = dateTemp.getMonth();
+                  var year = dateTemp.getFullYear();
+
+                  dateStart = year + "-" + ("0"+(month+1)).slice(-2) +"-"+("0" + date).slice(-2);
+                %>
+
+                <div class="form-group">
+                  <label class="col-md-12">Ngày bắt đầu</label>
+                  <div class="col-md-12">
+                    <input type="date" placeholder="Nhập ngày bắt đầu.."
+                      class="form-control form-control-line" value="<%= dateStart %>"
+                      name="START_DAY" id="START_DAY">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-12">Trạng thái</label>
+                  <div class="col-sm-12">
+                    <select class="form-control form-control-line" name="STATUS_COURSE">
+                      <% if(courseOne.STATUS_COURSE == 1) { %>
+                      <option value="1" selected>Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <% } else { %>
+                      <option value="1">Hoạt động</option>
+                      <option value="0" selected>Ngưng hoạt động</option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="btn btn-success" onclick="submitform();" type="button">
+                      Lưu
+                    </button>
+                    <button class="btn btn-light" type="button"
+                      onclick="window.location.href='/admin/index'">
+                      Quay lại
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="white-box">
+              <h3 class="box-title">
+                Quản lý lớp học
+
+                <a href="/admin/class/<%= courseOne.ID %>/new/" class="btn btn-primary">
+                  Tạo mới
+                </a>
+
+              </h3>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Tiêu đề</th>
+                      <th>Tuần học</th>
+                      <th>Ngày học</th>
+                      <th>Loại lớp</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% classList.forEach(function(item){ %>
+
+                    <%
+                        if(item.TYPE_CLASS == 0) {
+                          StrA = "Lớp học trực tuyến";
+                        } else {
+                          StrA = "Lớp học thảo luận";
+                        }
+
+                        var dateTemp = new Date(item.DATE_STUDY);
+
+                        var date = dateTemp.getDate();
+                        var month = dateTemp.getMonth();
+                        var year = dateTemp.getFullYear();
+
+                        dateStart = date + "-" + (month + 1) + "-" + year;
+                      %>
+
+                    <tr>
+                      <td><%= item.TITLE_CLASS %></td>
+                      <td><%= item.INDEX_WEEK %></td>
+                      <td><%= dateStart %></td>
+                      <td><%= StrA %></td>
+                      <td>
+                        <a href="/admin/class/<%= courseOne.ID %>/edit/<%= item.ID %>" class="btn btn-primary">
+                          Sửa
+                        </a>
+                        <a href="/admin/class/<%= courseOne.ID %>/delete/<%= item.ID %>" class="btn btn-danger">
+                          Xóa
+                        </a>
+                      </td>
+                    </tr>
+                    <% }); %>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="white-box">
+              <h3 class="box-title">
+                Quản lý bài tập
+
+                <a href="/admin/exercise/<%= courseOne.ID %>/new/" class="btn btn-primary">
+                  Tạo mới
+                </a>
+
+              </h3>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Tiêu đề</th>
+                      <th>Deadline</th>
+                      <th>Trạng thái</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% homeworkList.forEach(function(item){ %>
+
+                    <%
+                        if(item.STATUS_EXERCISE == 1) {
+                          StrA = "Đang hoạt động";
+                        } else {
+                          StrA = "Ngừng hoạt động";
+                        }
+
+                        var dateTemp = new Date(item.DEADLINE);
+
+                        var date = dateTemp.getDate();
+                        var month = dateTemp.getMonth();
+                        var year = dateTemp.getFullYear();
+
+                        dateStart = date + "-" + (month + 1) + "-" + year;
+                      %>
+
+                    <tr>
+                      <td><%= item.TITLE_EXERCISE %></td>
+                      <td><%= dateStart %></td>
+                      <td><%= StrA %></td>
+                      <td>
+                        <a href="/admin/exercise/<%= courseOne.ID %>/edit/<%= item.ID %>" class="btn btn-primary">
+                          Sửa
+                        </a>
+                        <a href="/admin/exercise/<%= courseOne.ID %>/delete/<%= item.ID %>"  onclick="return confirmBox();" class="btn btn-danger">
+                          Xóa
+                        </a>
+                      </td>
+                    </tr>
+
+                    <% }); %>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <script>
+    function submitform() {
+      if($('#TITLE_COURSE').val().trim().length == 0 ||
+        $('#DESCRIPTION_COURSE').val().trim().length == 0 ||
+        $('#IMAGE_COURSE').val().trim().length == 0 ||
+        $('#TOTAL_WEEK').val().trim().length == 0 ||
+        $('#START_DAY').val().trim().length == 0) {
+
+          alert('Vui lòng điền đầy đủ thông tin!');
+
+          return false;
+
+        } else {
+          $('form').submit();
+        }
+    }
+  </script>
+
+  <% include ../../partials/admin/footer %>
+</body>
+
+</html>

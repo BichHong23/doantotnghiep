@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <% include ../../partials/head %>
+  </head>
+
+  <body>
+    <% include ../../partials/header %>
+
+    <section class="uv-course-archive">
+      <div class="container">
+        <div class="educationpress-main-content-inner row">
+          <div class="col-md-2">
+
+          </div>
+          <div id="primary" class="content-area uv-course-listing-inner col-md-8 col-sm-12">
+            <div class="uv-sudent-profile-info padding-top-o">
+              <div class="uv-student-courses-overview">
+                <ul>
+                  <% data.forEach((e,i) => { %>
+
+                  <li>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="course-feature-img">
+                          <img
+                            src="<%=e.IMAGE_EXERCISE%>"
+                            alt=""
+                            class="img-responsive"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="uv-std-course-info">
+                          <a class="btn btn-primary"
+                            href="/quiz/<%=e.COUNT > 0 ? 'result':'detail'%>?id=<%=e.ID%>"
+                          >
+                            <h6><%=e.TITLE_EXERCISE%></h6>
+                          </a>
+                          <div class="uv-std-course-review">
+                            <ul>
+                              <li>
+                                Trạng thái: <%=e.STATUS_EXERCISE == 1?"Đang mở"
+                                : "Đã đóng"%>
+                              </li>
+                              <li>&nbsp;&nbsp;</li>
+                              <!-- <li>
+                                <i class="fa fa-eye" style="color: black"
+                                  >&nbsp;300</i
+                                >
+                              </li> -->
+                            </ul>
+                            <!-- <span
+                              >Ngày đóng :
+                              <%=e.DEADLINE.toJSON().slice(0,10)%></span -->
+                            >
+                          </div>
+                          <p><%=e.DESCRIPTION_EXERCISE%></p>
+                          <h6>
+                            <%=e.COUNT > 0 ? "Đã hoàn thành" : "Chưa làm"%>
+                          </h6>
+                          <% if(e.COUNT >0) {%>
+                          <a href="/quiz/detail?id=<%=e.ID%>" class="btn btn-sm btn-info">
+                            <h6 style="color: green;">LÀM LẠI</h6>
+                          </a>
+                          <%}%>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <% }) %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- #primary -->
+        </div>
+      </div>
+    </section>
+
+    <% include ../../partials/footerInfo %> <% include ../../partials/footer %>
+  </body>
+</html>

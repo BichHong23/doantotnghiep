@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <% include ../../partials/admin/head %>
+</head>
+
+<body class="fix-header">
+
+  <div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+      <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+  </div>
+
+  <div id="wrapper">
+    <% include ../../partials/admin/leftmenu %>
+
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <div class="row bg-title">
+          <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Quản lý bài tập</h4>
+          </div>
+          <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+              <li><a href="/admin">Trang chủ</a></li>
+              <li class="active">Quản lý khóa học</li>
+            </ol>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="white-box">
+              <form class="form-horizontal form-material" action="/admin/exercise/edit" method="post">
+
+                <input type="hidden" name="ID" value="<%= exerciseOne.ID %>" />
+                <input type="hidden" name="ID_COURSE" value="<%= exerciseOne.ID_COURSE %>" />
+
+                <div class="form-group">
+                  <label class="col-md-12">Tiêu đề bài tập</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập tiêu đề bài tập.."
+                      class="form-control form-control-line" value="<%= exerciseOne.TITLE_EXERCISE %>"
+                      name="TITLE_EXERCISE" id="TITLE_EXERCISE">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="example-email" class="col-md-12">Mô tả bài tập</label>
+                  <div class="col-md-12">
+                    <textarea placeholder="Nhập mô tả bài tập.."
+                      class="form-control form-control-line"
+                      name="DESCRIPTION_EXERCISE" id="DESCRIPTION_EXERCISE"><%= exerciseOne.DESCRIPTION_EXERCISE %></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-md-12">Link hình ảnh</label>
+                  <div class="col-md-12">
+                    <input type="text" placeholder="Nhập link hình ảnh.."
+                      class="form-control form-control-line" name="IMAGE_EXERCISE"
+                      value="<%= exerciseOne.IMAGE_EXERCISE %>" id="IMAGE_EXERCISE">
+                  </div>
+                </div>
+
+                <%
+                  var dateTemp = new Date(exerciseOne.DEADLINE);
+
+                  var date = dateTemp.getDate();
+                  var month = dateTemp.getMonth();
+                  var year = dateTemp.getFullYear();
+
+                  dateStart = year + "-" + ("0"+(month+1)).slice(-2) +"-"+("0" + date).slice(-2);
+                %>
+
+                <div class="form-group">
+                  <label class="col-md-12">Deadline</label>
+                  <div class="col-md-12">
+                    <input type="date" placeholder="Nhập tuần học.."
+                      class="form-control form-control-line" name="DEADLINE"
+                      value="<%= dateStart %>" id="DEADLINE">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-12">Trạng thái</label>
+                  <div class="col-sm-12">
+                    <select class="form-control form-control-line" name="STATUS_EXERCISE">
+                      <% if(exerciseOne.STATUS_EXERCISE == 1) { %>
+                        <option value="1" selected>Hoạt động</option>
+                        <option value="0">Ngừng hoạt động</option>
+                      <% } else { %>
+                        <option value="1">Hoạt động</option>
+                        <option value="0" selected>Ngừng hoạt động</option>
+                      <% } %>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-12">
+                    <button class="btn btn-success" onclick="submitform();" type="button">
+                      Lưu
+                    </button>
+                    <button class="btn btn-light" type="button"
+                      onclick="window.location.href='/admin/course/edit/<%= exerciseOne.ID_COURSE %>'">
+                      Quay lại
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="white-box">
+              <h3 class="box-title">
+                Quản lý câu hỏi
+
+                <a href="/admin/<%= exerciseOne.ID_COURSE %>/question/<%= exerciseOne.ID %>/new/" class="btn btn-primary">
+                  Tạo mới
+                </a>
+
+              </h3>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Số thự tự</th>
+                      <th>Nội dung</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% questionList.forEach(function(item){ %>
+
+                    <tr>
+                      <td><%= item.INDEX_QUESTION %></td>
+                      <td><%= item.CONTENT %></td>
+                      <td>
+                        <a href="/admin/<%= exerciseOne.ID_COURSE %>/question/<%= exerciseOne.ID %>/edit/<%= item.ID %>" class="btn btn-primary">
+                          Sửa
+                        </a>
+                        <a href="/admin/<%= exerciseOne.ID_COURSE %>/question/<%= exerciseOne.ID %>/delete/<%= item.ID %>"  onclick="return confirmBox();"  class="btn btn-danger">
+                          Xóa
+                        </a>
+                      </td>
+                    </tr>
+
+                    <% }); %>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+  </div>
+
+  <script>
+    function submitform() {
+      if($('#TITLE_EXERCISE').val().trim().length == 0 ||
+        $('#DESCRIPTION_EXERCISE').val().trim().length == 0 ||
+        $('#IMAGE_EXERCISE').val().trim().length == 0 ||
+        $('#DEADLINE').val().trim().length == 0) {
+
+          alert('Vui lòng điền đầy đủ thông tin!');
+          return false;
+
+        } else {
+          $('form').submit();
+        }
+    }
+  </script>
+
+  <% include ../../partials/admin/footer %>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+.tai-lieu-lop-hoc-truc-tuyen {
+  height: 100px;
+  background-color: lightgrey;
+  width: 100%;
+}
+.img-tai-lieu-lop-hoc-truc-tuyen img {
+  height: 100px;
+  width: 100px;
+}
+.tieu-de-tai-lieu-lop-hoc-truc-tuyen {
+  position: absolute;
+  top: 5px;
+  padding-left: 110px;
+}
+.tai-lieu-lop-hoc-truc-tuyen-upload-time {
+  position: absolute;
+  top: 70px;
+  padding-left: 110px;
+}
+p.tieu-de-tai-lieu {
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.button-download {
+  position: absolute;
+  top: 60px;
+  left: 360px;
+  width: 100px;
+  height: 30px;
+  background-color: orange;
+  text-align: center;
+  cursor: pointer;
+}
+
+.week {
+  text-align: center;
+  background-color: gray;
+  height: 27px;
+  margin-bottom: 10px;
+  float: left;
+  width: 75px;
+}
+.week-left {
+  margin-right: 7px;
+}
+.week-right {
+  margin-left: 7px;
+}
+.label-tieu-de-tai-lieu-lop-hoc-truc-tuyen {
+  height: 30px;
+  background-color: black;
+  color: orange;
+  text-align: center;
+}
+
+a:hover{
+  color: springgreen;
+}
+a:active{
+  color: springgreen;
+}

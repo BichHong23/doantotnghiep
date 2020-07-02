@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%- title %></title>
+  <% include ../../partials/head %>
+</head>
+
+<body>
+  <% include ../../partials/header %>
+
+  <section class="uv-course-archive">
+    <div class="container">
+      <div class="educationpress-main-content-inner row">
+        <div class="col-md-2">
+
+        </div>
+        <div id="primary" class="content-area uv-course-listing-inner col-md-8 col-sm-12">
+          <div class="uv-sudent-profile-info padding-top-o">
+            <div class="uv-student-courses-overview">
+              <ul>
+
+                <% listCourse.forEach(function(item){ %>
+
+                  <%
+                    var dateTemp = new Date(item.START_DAY);
+
+                    var date = dateTemp.getDate();
+                    var month = dateTemp.getMonth();
+                    var year = dateTemp.getFullYear();
+
+                    dateStart = ("0" + date).slice(-2) + "-" + ("0"+(month+1)).slice(-2) + "-" +year;
+                  %>
+
+                  <li>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="course-feature-img">
+                          <img src="<%= item.IMAGE_COURSE %>" alt="" class="img-responsive">
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="uv-std-course-info">
+                          <a href="/document/course/<%= item.ID %>/week/1">
+                            <h6><%= item.TITLE_COURSE %></h6>
+                          </a>
+                          <div class="uv-std-course-review">
+                            <ul>
+                              <li>Trạng thái: <%= item.TITLE_COURSE %></li>
+                            </ul>
+                            <!-- <span>Ngày mở: <%= dateStart %></span> -->
+                          </div>
+                          <p><%= item.DESCRIPTION_COURSE %></p>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                <% }); %>
+
+              </ul>
+            </div>
+          </div>
+        </div><!-- #primary -->
+      </div>
+    </div>
+  </section>
+
+  <% include ../../partials/footerInfo %>
+  <% include ../../partials/footer %>
+</body>
+
+</html>

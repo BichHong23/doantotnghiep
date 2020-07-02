@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%- title %></title>
+  <% include ../../partials/head %>
+
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="/study/css/time.css" />
+  <link rel="stylesheet" href="/study/css/chat.css" />
+
+  <style>
+    .iframe {
+      widows: 200px;
+      height: 200px;
+    }
+  
+  </style>
+
+</head>
+
+<body class="subpage">
+  <% include ../../partials/header %>
+    
+  <section class="uv-course-archive">
+    <div class="container">
+      <div class="educationpress-main-content-inner row">
+        <div class="col-md-2">
+         
+        </div>
+        <div id="primary" class="content-area uv-course-listing-inner col-md-8 col-sm-12">
+          <div class="uv-sudent-profile-info padding-top-o">
+            <div class="uv-student-courses-overview">
+              <ul>
+                <% data.forEach((e,i) => { %>
+                <li>
+                  <a>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="course-feature-img">
+                          <img src="<%=e.IMAGE_COURSE%>" alt="" class="img-responsive" />
+                        </div>
+                      </div>
+                      <div class="col-sm-8">
+                        <div class="uv-std-course-info">
+                          <a href="/class/<%= e.ID %>">
+                            <h6><%=e.TITLE_COURSE%></h6>
+                          </a>
+                          <div class="uv-std-course-review">
+                            <ul>
+                              <li>
+                                Trạng thái: <%=e.STATUS_COURSE == 1?"Đang mở"
+                                  : "Đã đóng" %>
+                              </li>
+                              <li>&nbsp;&nbsp;</li>
+                              <!-- <li>
+                                              <i class="fa fa-eye" style="color: black"
+                                                >&nbsp;300</i
+                                              >
+                                            </li> -->
+                            </ul>
+                            <span>Ngày đóng :
+                              <%=e.START_DAY.toJSON().slice(0,10)%></span>
+                          </div>
+                          <p><%=e.DESCRIPTION_COURSE%></p>
+                          <a style="    font-weight: bold;
+                            color: green;" href="/class/<%= e.ID %>">
+                            Tham gia >>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+          <br />
+        </div>
+        <!-- #primary -->
+      </div>
+    </div>
+  </section>
+  <% include ../../partials/footerInfo %> <% include ../../partials/footer %>
+ 
+  
+</body>
+
+</html>
